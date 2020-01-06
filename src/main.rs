@@ -58,6 +58,7 @@ fn approach_good() -> impl SignalVec<Item = String> {
     });
 
     list_signal.map(|entity_id| {
+        println!("getting label for entity {:?}", entity_id);
         WORLD.run::<&Label, _, _>(|labels| {
             (labels).get(entity_id).unwrap().0.to_string()
         })
@@ -70,6 +71,7 @@ fn approach_bad() -> impl SignalVec<Item = String> {
     WORLD.run::<(Unique<&EntityList>, &Label), _, _>(|(list, labels)| {
         list.0.signal_vec()
             .map(move |entity_id| {
+                println!("getting label for entity {:?}", entity_id);
                 (&labels).get(entity_id).unwrap().0.to_string()
             })
     })
